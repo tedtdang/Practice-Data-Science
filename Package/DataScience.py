@@ -63,51 +63,7 @@ def xgb_classifier(X_train, y_train, X_test):
 
     # Predict y
     predictions = best_grid.predict(X_test)
-    return (best_grid, predictions)
-
-def xgb_regressor(X_train, y_train, X_test):
-    # Import XGBGeressor and GridSearchCV libraries
-    from xgboost import XGBRegressor
-    from sklearn.model_selection import GridSearchCV
-
-    parameters = {'min_child_weight': [1, 5, 10],
-                'gamma': [0.5, 1, 1.5, 2, 5],
-                'subsample': [0.6, 0.8, 1.0],
-                'colsample_bytree': [0.6, 0.8, 1.0],
-                'max_depth': range(2, 10),
-                'scoring': ['roc_auc'], 
-                'learning_rate': [0.1, 0.01, 0.05],
-                'n_estimators': range(60, 220, 40),
-                 }
-
-    grid = GridSearchCV(XGBRegressor(),
-                            parameters,
-                            cv = 5,
-                            n_jobs = -1,
-                            verbose=True)
-
-    # Try fitting training data sets with all parameters
-    grid.fit(X_train, y_train)
-
-    # Print the best parameters
-    print(grid.best_params_)
-    
-    # Fit the training tests using the best parameters
-    best_grid = XGBRegressor(**grid.best_params_)
-    best_grid.fit(X_train,y_train)
-
-    # Predict y
-    predictions = best_grid.predict(X_test)
-    return (best_grid, predictions)
-
-def classification_report(X_test, y_test, predictions, best_grid, display):
-    from sklearn.metrics import classification_report, plot_confusion_matrix
-
-    # Plot the confusion matrix
-    plot_confusion_matrix(best_grid, X_test, y_test, display_labels=display)
-
-    # return classification report 
-    return(classification_report(y_test, predictions)) 
+    return predictions
 
 def rfr_classifier(X_train, y_train, X_test):
     from sklearn.ensemble import RandomForestClassifier
@@ -142,7 +98,163 @@ def rfr_classifier(X_train, y_train, X_test):
     
     # Get the predicted y
     predictions = best_grid.predict(X_test)
-    return (best_grid, predictions)
+    
+    # Print the score
+    print('Score: %0.2f' %best_grid.score(X_train, y_train))
+    return predictions
+
+def Logistic_classifier(X_train, y_train, X_test):
+    from sklearn.model_selection import GridSearchCV
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.model_selection import StratifiedKFold
+    
+    parameters = {'penalty': ['l1', 'l2', 'elasticnet', 'none'],
+                  'class_weight': ['dict', 'balanced'],
+                  'solver': ['newton-cg', 'lbfgs', 'liblinear', 'sag', 'saga'],
+                  'multi_class': ['auto', 'ovr', 'multinomial'],
+                 }
+    
+    model = LogisticRegression(random_state=1)
+    model_grid = GridSearchCV(model,
+                            parameters,
+                            cv = StratifiedKFold(),
+                            n_jobs = -1,
+                            verbose=True)
+    
+    # Try fitting training data sets with all parameters
+    model_grid.fit(X_train,y_train)
+    
+    # Print the best parameters
+    print(model_grid.best_params_)
+    
+    #Fit the training tests using the best parameters
+    best_search = LogisticRegression(**model_grid.best_params_, random_state=1)
+    best_search.fit(X_train,y_train)
+    
+    # Print the score
+    print('Score: %0.2f' %best_search.score(X_train, y_train))
+    
+    # Return predictions
+    predictions = best_search.predict(X_test)
+    return predictions
+
+def svm_classifier(X_train, y_train, X_test):
+    from sklearn.model_selection import GridSearchCV
+    from sklearn.svm import SVC
+    from sklearn.model_selection import StratifiedKFold
+    
+    parameters = {'C': range(13),
+                  'kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
+                  'degree': range(3, 6),
+                  'gamma': ['scale', 'auto'],
+                  'class_weight': ['dict', 'balanced'],
+                  'decision_function_shape': ['ovo', 'ovr']
+                 }
+    
+    model = SVC(random_state=1)
+    model_grid = GridSearchCV(model,
+                            parameters,
+                            cv = StratifiedKFold(),
+                            n_jobs = -1,
+                            verbose=True)
+    
+    # Try fitting training data sets with all parameters
+    model_grid.fit(X_train,y_train)
+    
+    # Print the best parameters
+    print(model_grid.best_params_)
+    
+    #Fit the training tests using the best parameters
+    best_search = SVC(**model_grid.best_params_, random_state=1)
+    best_search.fit(X_train,y_train)
+    
+    # Print the score
+    print('Score: %0.2f' %best_search.score(X_train, y_train))
+    
+    # Return predictions
+    predictions = best_search.predict(X_test)
+    return predictions
+
+def knn_classifier(X_train, y_train, X_test):
+    from sklearn.model_selection import GridSearchCV
+    from sklearn.neighbors import KNeighborsClassifier
+    from sklearn.model_selection import StratifiedKFold
+    
+    parameters = {'n_neighbors':[5,6,7,8,9,10],
+                  'leaf_size':[1,2,3,5],
+                  'weights':['uniform', 'distance'],
+                  'algorithm':['auto', 'ball_tree','kd_tree','brute']
+                 }
+    
+    model = KNeighborsClassifier()
+    model_grid = GridSearchCV(model,
+                            parameters,
+                            cv = StratifiedKFold(),
+                            n_jobs = -1,
+                            verbose=True)
+    
+    # Try fitting training data sets with all parameters
+    model_grid.fit(X_train,y_train)
+    
+    # Print the best parameters
+    print(model_grid.best_params_)
+    
+    #Fit the training tests using the best parameters
+    best_search = KNeighborsClassifier(**model_grid.best_params_)
+    best_search.fit(X_train,y_train)
+    
+    # Print the score
+    print('Score: %0.2f' %best_search.score(X_train, y_train))
+    
+    # Return predictions
+    predictions = best_search.predict(X_test)
+    return predictions
+
+def xgb_regressor(X_train, y_train, X_test):
+    # Import XGBGeressor and GridSearchCV libraries
+    from xgboost import XGBRegressor
+    from sklearn.model_selection import GridSearchCV
+
+    parameters = {'min_child_weight': [1, 5, 10],
+                'gamma': [0.5, 1, 1.5, 2, 5],
+                'subsample': [0.6, 0.8, 1.0],
+                'colsample_bytree': [0.6, 0.8, 1.0],
+                'max_depth': range(2, 10),
+                'scoring': ['roc_auc'], 
+                'learning_rate': [0.1, 0.01, 0.05],
+                'n_estimators': range(60, 220, 40),
+                 }
+
+    grid = GridSearchCV(XGBRegressor(),
+                            parameters,
+                            cv = 5,
+                            n_jobs = -1,
+                            verbose=True)
+
+    # Try fitting training data sets with all parameters
+    grid.fit(X_train, y_train)
+
+    # Print the best parameters
+    print(grid.best_params_)
+    
+    # Fit the training tests using the best parameters
+    best_grid = XGBRegressor(**grid.best_params_)
+    best_grid.fit(X_train,y_train)
+
+    # Predict y
+    predictions = best_grid.predict(X_test)
+    return predictions
+
+def classification_report(X_test, y_test, predictions, best_grid, display):
+    from sklearn.metrics import classification_report, plot_confusion_matrix
+
+    # Plot the confusion matrix
+    plot_confusion_matrix(best_grid, X_test, y_test, display_labels=display)
+
+    # return classification report 
+    return(classification_report(y_test, predictions)) 
+
+
 
 def test_imputations(X_train, y_train, num_cols):
     import statsmodels.api as sm
