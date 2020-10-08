@@ -176,9 +176,8 @@ def svm_classifier(X_train, y_train, X_test):
     return predictions
 
 def knn_classifier(X_train, y_train, X_test):
-    from sklearn.model_selection import GridSearchCV
+    from sklearn.model_selection import GridSearchCV, StratifiedKFold
     from sklearn.neighbors import KNeighborsClassifier
-    from sklearn.model_selection import StratifiedKFold
     
     parameters = {'n_neighbors':[5,6,7,8,9,10],
                   'leaf_size':[1,2,3,5],
@@ -243,6 +242,117 @@ def xgb_regressor(X_train, y_train, X_test):
 
     # Predict y
     predictions = best_grid.predict(X_test)
+    
+    # Print the score
+    print('Score: %0.2f' %best_grid.score(X_train, y_train))
+    return predictions
+
+def rfr_regressor(X_train, y_train, X_test):
+    from sklearn.ensemble import RandomForestRegressor
+    from sklearn.model_selection import GridSearchCV, KFold
+
+    # Create the parameter grid based on the results of random search 
+    parameters = {
+        'bootstrap': [True],
+        'max_depth': [80, 90, 100, 110],
+        'max_features': [2, 3],
+        'min_samples_leaf': [3, 4, 5],
+        'min_samples_split': [8, 10, 12],
+        'n_estimators': [100, 200, 300, 1000]
+    }
+    
+    # Create a based model
+    rf = RandomForestRegressor()
+    
+    # Instantiate the grid search model
+    grid_search = GridSearchCV(estimator = rf, param_grid = parameters, 
+                              cv = KFold(5), n_jobs = -1, verbose = 2)
+    
+    # Try fitting training data sets with all parameters
+    grid_search.fit(X_train,y_train)
+    
+    # Print the best parameters
+    print(grid_search.best_params_)
+    
+    #Fit the training tests using the best parameters
+    best_grid = RandomForestRegressor(**grid_search.best_params_)
+    best_grid.fit(X_train,y_train)
+    
+    # Get the predicted y
+    predictions = best_grid.predict(X_test)
+    
+    # Print the score
+    print('Score: %0.2f' %best_grid.score(X_train, y_train))
+    return predictions
+
+def svm_regressor(X_train, y_train, X_test):
+    from sklearn.model_selection import GridSearchCV
+    from sklearn.svm import SVR
+    from sklearn.model_selection import KFold
+    
+    parameters = {'C': range(1, 13),
+                  'kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
+                  'degree': range(3, 9),
+                  'gamma': ['scale', 'auto'],
+                  'coef0' : [0.01,10,0.5]
+                 }
+    
+    model = SVR()
+    model_grid = GridSearchCV(model,
+                            parameters,
+                            cv = KFold(5),
+                            n_jobs = -1,
+                            verbose=True)
+    
+    # Try fitting training data sets with all parameters
+    model_grid.fit(X_train,y_train)
+    
+    # Print the best parameters
+    print(model_grid.best_params_)
+    
+    #Fit the training tests using the best parameters
+    best_search = SVR(**model_grid.best_params_, random_state=1)
+    best_search.fit(X_train,y_train)
+    
+    # Print the score
+    print('Score: %0.2f' %best_search.score(X_train, y_train))
+    
+    # Return predictions
+    predictions = best_search.predict(X_test)
+    return predictions
+
+def ridge_regressor(X_train, y_train, X_test):
+    from sklearn.linear_model import Ridge
+    from sklearn.model_selection import GridSearchCV, KFold
+    
+    parameters = {'alpha': range(0, 101, 10),
+                    'fit_intercept': [True,False], 
+                    'normalize' :[False, True],
+                    'solver': ['auto', 'svd', 'cholesky', 'lsqr', 'sparse_cg', 'sag', 'saga']
+                 }
+    
+    model = Ridge()
+    model_grid = GridSearchCV(model,
+                            parameters,
+                            cv = KFold(5),
+                            n_jobs = -1,
+                            verbose=True)
+    
+    # Try fitting training data sets with all parameters
+    model_grid.fit(X_train,y_train)
+    
+    # Print the best parameters
+    print(model_grid.best_params_)
+    
+    #Fit the training tests using the best parameters
+    best_search = Ridge(**model_grid.best_params_)
+    best_search.fit(X_train,y_train)
+    
+    # Print the score
+    print('Score: %0.2f' %best_search.score(X_train, y_train))
+    
+    # Return predictions
+    predictions = best_search.predict(X_test)
     return predictions
 
 def classification_report(X_test, y_test, predictions, best_grid, display):
