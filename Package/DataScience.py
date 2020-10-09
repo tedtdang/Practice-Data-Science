@@ -66,6 +66,7 @@ def xgb_classifier(X_train, y_train, X_test):
     return predictions
 
 def rfr_classifier(X_train, y_train, X_test):
+    '''Advantage: It is invariant to scaled data'''
     from sklearn.ensemble import RandomForestClassifier
     from sklearn.model_selection import GridSearchCV
 
@@ -139,6 +140,7 @@ def Logistic_classifier(X_train, y_train, X_test):
     return predictions
 
 def svm_classifier(X_train, y_train, X_test):
+    '''Disadvantage: Poor performance with large size data sets'''
     from sklearn.model_selection import GridSearchCV
     from sklearn.svm import SVC
     from sklearn.model_selection import StratifiedKFold
@@ -248,6 +250,7 @@ def xgb_regressor(X_train, y_train, X_test):
     return predictions
 
 def rfr_regressor(X_train, y_train, X_test):
+    '''Advantage: It is invariant to scaled data'''
     from sklearn.ensemble import RandomForestRegressor
     from sklearn.model_selection import GridSearchCV, KFold
 
@@ -286,6 +289,7 @@ def rfr_regressor(X_train, y_train, X_test):
     return predictions
 
 def svm_regressor(X_train, y_train, X_test):
+    '''Disadvantage: Poor performance with large size data sets'''
     from sklearn.model_selection import GridSearchCV
     from sklearn.svm import SVR
     from sklearn.model_selection import KFold
@@ -368,7 +372,6 @@ def classification_report(X_test, y_test, predictions, best_grid, display):
 
 def test_imputations(X_train, y_train, num_cols):
     import statsmodels.api as sm
-    import pandas as pd
     from sklearn.impute import SimpleImputer
     from fancyimpute import KNN, IterativeImputer
     
@@ -391,8 +394,12 @@ def test_imputations(X_train, y_train, num_cols):
     knn_imputer = KNN()
     X_knn_imputed = sm.add_constant(knn_imputer.fit_transform(X_train[num_cols]))
     lm_knn = sm.OLS(y_train, X_knn_imputed).fit()
-
-    print(pd.DataFrame({'Mean': lm_mean.rsquared_adj, 'Median': lm_median.rsquared_adj, 'Iterative': lm_iterative.rsquared_adj, 'KNN': lm_knn.rsquared_adj}, index=['R_squared_adj']))
+    
+    imputation_list = [('Mean', lm_mean.rsquared_adj), ('Median', lm_median.rsquared_adj), 
+                       ('Iterative', lm_iterative.rsquared_adj), ('KNN', lm_knn.rsquared_adj)]
+    imputation_list = sorted(imputation_list, key=(lambda x: x[1]), reverse=True)
+    print('The best imputation: ', imputation_list[0])
+    # print(pd.DataFrame({'Mean': lm_mean.rsquared_adj, 'Median': lm_median.rsquared_adj, 'Iterative': lm_iterative.rsquared_adj, 'KNN': lm_knn.rsquared_adj}, index=['R_squared_adj']))
     
 def test_KNN_imputation(X_train, y_train, num_cols, neighbors):
     import statsmodels.api as sm
