@@ -402,8 +402,6 @@ def test_KNN_imputation(X_train, y_train, num_cols, neighbors):
     sorted_scores = sorted(scores, key = lambda x: x[0], reverse=True)
     print(sorted_scores[0])
     
-def test
-    
 def evaluate_regression(X, y, model):
     '''Credit: Jason Brownlee
     Source: https://machinelearningmastery.com/robust-regression-for-machine-learning-in-python/'''
@@ -418,6 +416,7 @@ def compare_linear_regression(X, y):
     '''Credit: Jason Brownlee
     Source: https://machinelearningmastery.com/robust-regression-for-machine-learning-in-python/'''
     from numpy import mean
+    from matplotlib import pyplot
     from sklearn.linear_model import LinearRegression, HuberRegressor, RANSACRegressor, TheilSenRegressor
     result = []
     linear_list = [(LinearRegression(), 'linear'), (HuberRegressor(), 'huber'), (RANSACRegressor(), 'ransac'), (TheilSenRegressor(), 'theilsen')]
