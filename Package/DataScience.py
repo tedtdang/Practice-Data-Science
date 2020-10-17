@@ -33,21 +33,16 @@ def process_sets(x):
 def xgb_classifier(X_train, y_train, X_test):
     # Import XGBGeressor and GridSearchCV libraries
     from xgboost import XGBClassifier
-    from sklearn.model_selection import GridSearchCV
+    from sklearn.model_selection import GridSearchCV, RepeatedKFold
 
-    parameters = {'min_child_weight': [1, 5, 10],
-                'gamma': [0.5, 1, 1.5, 2, 5],
-                'subsample': [0.6, 0.8, 1.0],
-                'colsample_bytree': [0.6, 0.8, 1.0],
-                'max_depth': range(2, 10),
-                'scoring': ['roc_auc'], 
-                'learning_rate': [0.1, 0.01, 0.05],
+    parameters = {'max_depth': range (2, 10, 1),
                 'n_estimators': range(60, 220, 40),
+                'learning_rate': [0.1, 0.01, 0.05]
                  }
 
     grid = GridSearchCV(XGBClassifier(),
                             parameters,
-                            cv = 5,
+                            cv = RepeatedKFold(n_splits=10, n_repeats=5, random_state=1),
                             n_jobs = -1,
                             verbose=True)
 
@@ -68,7 +63,7 @@ def xgb_classifier(X_train, y_train, X_test):
 def rfr_classifier(X_train, y_train, X_test):
     '''Advantage: It is invariant to scaled data'''
     from sklearn.ensemble import RandomForestClassifier
-    from sklearn.model_selection import GridSearchCV
+    from sklearn.model_selection import GridSearchCV, RepeatedKFold
 
     # Create the parameter grid based on the results of random search 
     parameters = {
@@ -85,7 +80,8 @@ def rfr_classifier(X_train, y_train, X_test):
     
     # Instantiate the grid search model
     grid_search = GridSearchCV(estimator = rf, param_grid = parameters, 
-                              cv = 5, n_jobs = -1, verbose = 2)
+                              cv = RepeatedKFold(n_splits=10, n_repeats=5, random_state=1), 
+                              n_jobs = -1, verbose = 2)
     
     # Try fitting training data sets with all parameters
     grid_search.fit(X_train,y_train)
@@ -105,7 +101,7 @@ def rfr_classifier(X_train, y_train, X_test):
     return predictions
 
 def Logistic_classifier(X_train, y_train, X_test):
-    from sklearn.model_selection import GridSearchCV
+    from sklearn.model_selection import GridSearchCV, RepeatedKFold
     from sklearn.linear_model import LogisticRegression
     from sklearn.model_selection import StratifiedKFold
     
@@ -118,7 +114,7 @@ def Logistic_classifier(X_train, y_train, X_test):
     model = LogisticRegression(random_state=1)
     model_grid = GridSearchCV(model,
                             parameters,
-                            cv = StratifiedKFold(),
+                            cv = RepeatedKFold(n_splits=10, n_repeats=5, random_state=1),
                             n_jobs = -1,
                             verbose=True)
     
@@ -141,9 +137,8 @@ def Logistic_classifier(X_train, y_train, X_test):
 
 def svm_classifier(X_train, y_train, X_test):
     '''Disadvantage: Poor performance with large size data sets'''
-    from sklearn.model_selection import GridSearchCV
+    from sklearn.model_selection import GridSearchCV, RepeatedKFold
     from sklearn.svm import SVC
-    from sklearn.model_selection import StratifiedKFold
     
     parameters = {'C': range(13),
                   'kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
@@ -156,7 +151,7 @@ def svm_classifier(X_train, y_train, X_test):
     model = SVC(random_state=1)
     model_grid = GridSearchCV(model,
                             parameters,
-                            cv = StratifiedKFold(),
+                            cv = RepeatedKFold(n_splits=10, n_repeats=5, random_state=1),
                             n_jobs = -1,
                             verbose=True)
     
@@ -190,7 +185,7 @@ def knn_classifier(X_train, y_train, X_test):
     model = KNeighborsClassifier()
     model_grid = GridSearchCV(model,
                             parameters,
-                            cv = StratifiedKFold(),
+                            cv = RepeatedKFold(n_splits=10, n_repeats=5, random_state=1),
                             n_jobs = -1,
                             verbose=True)
     
@@ -216,14 +211,10 @@ def xgb_regressor(X_train, y_train, X_test):
     from xgboost import XGBRegressor
     from sklearn.model_selection import GridSearchCV
 
-    parameters = {'min_child_weight': [1, 5, 10],
-                'gamma': [0.5, 1, 1.5, 2, 5],
-                'subsample': [0.6, 0.8, 1.0],
-                'colsample_bytree': [0.6, 0.8, 1.0],
-                'max_depth': range(2, 10),
-                'scoring': ['roc_auc'], 
-                'learning_rate': [0.1, 0.01, 0.05],
+    parameters = {
+                'max_depth': range (2, 10, 1),
                 'n_estimators': range(60, 220, 40),
+                'learning_rate': [0.1, 0.01, 0.05]
                  }
 
     grid = GridSearchCV(XGBRegressor(),
@@ -368,8 +359,6 @@ def classification_report(X_test, y_test, predictions, best_grid, display):
     # return classification report 
     return(classification_report(y_test, predictions)) 
 
-
-
 def test_imputations(X_train, y_train, num_cols):
     import statsmodels.api as sm
     from sklearn.impute import SimpleImputer
@@ -412,3 +401,28 @@ def test_KNN_imputation(X_train, y_train, num_cols, neighbors):
         scores.append([lm_knn.rsquared_adj, 'k == ' + str(k)])
     sorted_scores = sorted(scores, key = lambda x: x[0], reverse=True)
     print(sorted_scores[0])
+    
+def test
+    
+def evaluate_regression(X, y, model):
+    '''Credit: Jason Brownlee
+    Source: https://machinelearningmastery.com/robust-regression-for-machine-learning-in-python/'''
+    from sklearn.model_selection import RepeatedKFold, cross_val_score
+    cv = RepeatedKFold(n_splits=10, n_repeats=5, random_state=1)
+    # evaluate model
+    scores = cross_val_score(model, X, y, scoring='neg_mean_absolute_error', cv=cv, n_jobs=-1)
+    # force scores to be positive
+    return abs(scores)
+
+def compare_linear_regression(X, y):
+    '''Credit: Jason Brownlee
+    Source: https://machinelearningmastery.com/robust-regression-for-machine-learning-in-python/'''
+    from numpy import mean
+    from sklearn.linear_model import LinearRegression, HuberRegressor, RANSACRegressor, TheilSenRegressor
+    result = []
+    linear_list = [(LinearRegression(), 'linear'), (HuberRegressor(), 'huber'), (RANSACRegressor(), 'ransac'), (TheilSenRegressor(), 'theilsen')]
+    for model in linear_list:
+        result.append([mean(evaluate_regression(X, y, model[0])), model[1]])
+    sorted_result = sorted(result, key=(lambda x: x[0]), reverse=True)
+    print(sorted_result)
+
