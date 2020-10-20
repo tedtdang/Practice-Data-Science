@@ -416,7 +416,6 @@ def compare_linear_regression(X, y):
     '''Credit: Jason Brownlee
     Source: https://machinelearningmastery.com/robust-regression-for-machine-learning-in-python/'''
     from numpy import mean
-    from matplotlib import pyplot
     from sklearn.linear_model import LinearRegression, HuberRegressor, RANSACRegressor, TheilSenRegressor
     result = []
     linear_list = [(LinearRegression(), 'linear'), (HuberRegressor(), 'huber'), (RANSACRegressor(), 'ransac'), (TheilSenRegressor(), 'theilsen')]
@@ -425,3 +424,22 @@ def compare_linear_regression(X, y):
     sorted_result = sorted(result, key=(lambda x: x[0]), reverse=True)
     print(sorted_result)
 
+def compare_regression(X, y):
+    from sklearn.linear_model import LinearRegression, HuberRegressor, RANSACRegressor, TheilSenRegressor, Lasso, Ridge
+    from xgboost import XGBRegressor
+    from sklearn.ensemble import RandomForestRegressor
+    from sklearn.svm import SVR
+    from sklearn.model_selection import KFold, cross_val_score
+    models = [LinearRegression(), HuberRegressor(), RANSACRegressor(), TheilSenRegressor(), Lasso(), Ridge()]
+    models.append(XGBRegressor())
+    models.append(RandomForestRegressor())
+    models.append(SVR())
+    names = ['linear', 'huber', 'ransac', 'theilsen', 'lasso', 'ridge', 'xgb', 'rfr', 'svr']
+    scoring = 'neg_mean_squared_error'
+    results = []
+    for model, name in zip(models, names):
+    	kfold = KFold(n_splits=10)
+    	cv_results = cross_val_score(model, X, y, cv=kfold, scoring=scoring)
+    	results.append(cv_results)
+    	msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
+    	print(msg)
