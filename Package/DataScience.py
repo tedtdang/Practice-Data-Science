@@ -482,17 +482,6 @@ def compare_regression(X, y, num_cols, cat_cols):
 
 def impute_and_encode_and_scale(X, y, num_cols, cat_cols):
     import pandas as pd
-    # Impute missing categorical data
-    from sklearn.impute import SimpleImputer
-    cat_imputer = SimpleImputer(strategy='most_frequent')
-    X[cat_cols] = cat_imputer.fit_transform(X[cat_cols])
-    
-    # Encode categorical data
-    X = pd.get_dummies(data=X, columns=cat_cols,  drop_first=True)
-    
-    # Update new cat_cols
-    cat_cols = set(X.columns) - set(num_cols)
-    
     # Test imputation methods
     test_imputations(X, y, num_cols)
     
@@ -504,9 +493,23 @@ def impute_and_encode_and_scale(X, y, num_cols, cat_cols):
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X[num_cols])
     X_scaled = pd.DataFrame(data=X_scaled, columns=num_cols, index=X.index)
+        
+    # Impute missing categorical data
+    if len(cat_cols) > 0:
+        from sklearn.impute import SimpleImputer
+        cat_imputer = SimpleImputer(strategy='most_frequent')
+        X[cat_cols] = cat_imputer.fit_transform(X[cat_cols])
+        
+        # Encode categorical data
+        X = pd.get_dummies(data=X, columns=cat_cols,  drop_first=True)
+        
+        # Update new cat_cols
+        cat_cols = set(X.columns) - set(num_cols)
     
-    # Combine num and cat cols
-    X = pd.concat([X_scaled, X[cat_cols]], axis=1)
+        # Combine num and cat cols
+        X = pd.concat([X_scaled, X[cat_cols]], axis=1)
+    else:
+        X = X_scaled
     
     return X
     
