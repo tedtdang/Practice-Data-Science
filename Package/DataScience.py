@@ -359,48 +359,61 @@ def classification_report(X_test, y_test, predictions, best_grid, display):
     # return classification report 
     return(classification_report(y_test, predictions)) 
 
-def test_imputations(X_train, y_train, num_cols):
+def test_imputations(X, y, num_cols):
     import statsmodels.api as sm
     from sklearn.impute import SimpleImputer
     from fancyimpute import KNN, IterativeImputer
     
     # Create an object of mean_imputed
     mean_imputer = SimpleImputer(strategy='mean')
-    X_mean_imputed = sm.add_constant(mean_imputer.fit_transform(X_train[num_cols]))
-    lm_mean = sm.OLS(y_train, X_mean_imputed).fit()
+    X_mean_imputed = sm.add_constant(mean_imputer.fit_transform(X[num_cols]))
+    lm_mean = sm.OLS(y, X_mean_imputed).fit()
 
     # Create an object of median imputed
     median_imputer = SimpleImputer(strategy='median')
-    X_median_imputed = sm.add_constant(median_imputer.fit_transform(X_train[num_cols]))
-    lm_median = sm.OLS(y_train, X_median_imputed).fit()
+    X_median_imputed = sm.add_constant(median_imputer.fit_transform(X[num_cols]))
+    lm_median = sm.OLS(y, X_median_imputed).fit()
 
     # Create an object of Iterative Imputer
     iterative_imputer = IterativeImputer()
-    X_iterative_imputed = sm.add_constant(iterative_imputer.fit_transform(X_train[num_cols]))
-    lm_iterative = sm.OLS(y_train, X_iterative_imputed).fit()
+    X_iterative_imputed = sm.add_constant(iterative_imputer.fit_transform(X[num_cols]))
+    lm_iterative = sm.OLS(y, X_iterative_imputed).fit()
 
     # Create an object of KNN Imputer
     knn_imputer = KNN()
-    X_knn_imputed = sm.add_constant(knn_imputer.fit_transform(X_train[num_cols]))
-    lm_knn = sm.OLS(y_train, X_knn_imputed).fit()
+    X_knn_imputed = sm.add_constant(knn_imputer.fit_transform(X[num_cols]))
+    lm_knn = sm.OLS(y, X_knn_imputed).fit()
     
     imputation_list = [('Mean', lm_mean.rsquared_adj), ('Median', lm_median.rsquared_adj), 
                        ('Iterative', lm_iterative.rsquared_adj), ('KNN', lm_knn.rsquared_adj)]
     imputation_list = sorted(imputation_list, key=(lambda x: x[1]), reverse=True)
-    print('The best imputation: ', imputation_list[0])
-    # print(pd.DataFrame({'Mean': lm_mean.rsquared_adj, 'Median': lm_median.rsquared_adj, 'Iterative': lm_iterative.rsquared_adj, 'KNN': lm_knn.rsquared_adj}, index=['R_squared_adj']))
+    best_imputer = imputation_list[0]
+    print('The best imputation: ', best_imputer)
+    if best_imputer == 'Mean':
+        num_imputer = SimpleImputer(strategy='mean')
+        X[num_cols] = num_imputer.fit_transform(X[num_cols])
+    elif best_imputer == 'Median':
+        num_imputer = SimpleImputer(strategy='median')
+        X[num_cols] = num_imputer.fit_transform(X[num_cols])
+    elif best_imputer == 'Iterative':
+        num_imputer = IterativeImputer()
+        X[num_cols] = num_imputer.fit_transform(X[num_cols])
+    else:
+        num_imputer = KNN(test_KNN_imputation(X, y, num_cols))
+        X[num_cols] = num_imputer.fit_transform(X[num_cols])
+    return X
     
-def test_KNN_imputation(X_train, y_train, num_cols, neighbors):
+def test_KNN_imputation(X_train, y_train, num_cols):
     import statsmodels.api as sm
     from fancyimpute import KNN
     scores = []
-    for k in neighbors:
+    for k in range(2, 10):
         knn_imputer = KNN(k)
         X_knn_imputed = sm.add_constant(knn_imputer.fit_transform(X_train[num_cols]))
         lm_knn = sm.OLS(y_train, X_knn_imputed).fit()
-        scores.append([lm_knn.rsquared_adj, 'k == ' + str(k)])
+        scores.append([lm_knn.rsquared_adj, k])
     sorted_scores = sorted(scores, key = lambda x: x[0], reverse=True)
-    print(sorted_scores[0])
+    return sorted_scores[0][1]
     
 def evaluate_regression(X, y, model):
     '''Credit: Jason Brownlee
@@ -424,12 +437,35 @@ def compare_linear_regression(X, y):
     sorted_result = sorted(result, key=(lambda x: x[0]), reverse=True)
     print(sorted_result)
 
-def compare_regression(X, y):
+def compare_regression(X, y, num_cols, cat_cols):
     from sklearn.linear_model import LinearRegression, HuberRegressor, RANSACRegressor, TheilSenRegressor, Lasso, Ridge
     from xgboost import XGBRegressor
     from sklearn.ensemble import RandomForestRegressor
     from sklearn.svm import SVR
     from sklearn.model_selection import KFold, cross_val_score
+    from sklearn.impute import SimpleImputer
+    from sklearn.preprocessing import StandardScaler
+    import pandas as pd
+    
+    # Impute missing cat data
+    cat_imputer = SimpleImputer(strategy='most_frequent')
+    X[cat_cols] = cat_imputer.fit_transform(X[cat_cols])
+    
+    # Encode cat data
+    X = pd.get_dummies(data=X, columns=cat_cols, drop_first=True)
+    
+    # Impute missing num data
+    num_imputer = SimpleImputer(strategy='mean')
+    X[num_cols] = num_imputer.fit_transform(X[num_cols])
+    
+    # Scale num data
+    sc = StandardScaler()
+    X_scaled = sc.fit_transform(X[num_cols])
+    X_num = pd.DataFrame(data=X_scaled, columns=num_cols, index=X.index)
+    
+    # Combine numeric and categorical data into DataFrame format
+    X = pd.concat([X_num, X[cat_cols]], axis=1)
+    
     models = [LinearRegression(), HuberRegressor(), RANSACRegressor(), TheilSenRegressor(), Lasso(), Ridge()]
     models.append(XGBRegressor())
     models.append(RandomForestRegressor())
@@ -443,3 +479,50 @@ def compare_regression(X, y):
     	results.append(cv_results)
     	msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
     	print(msg)
+
+def impute_and_encode_and_scale(X, y, num_cols, cat_cols):
+    import pandas as pd
+    # Impute missing categorical data
+    from sklearn.impute import SimpleImputer
+    cat_imputer = SimpleImputer(strategy='most_frequent')
+    X[cat_cols] = cat_imputer.fit_transform(X[cat_cols])
+    
+    # Encode categorical data
+    X = pd.get_dummies(data=X, columns=cat_cols,  drop_first=True)
+    
+    # Update new cat_cols
+    cat_cols = set(X.columns) - set(num_cols)
+    
+    # Test imputation methods
+    test_imputations(X, y, num_cols)
+    
+    # Impute missing numeric data
+    X = test_imputations(X, y, num_cols)
+    
+    # Scale numeric data
+    from sklearn.preprocessing import StandardScaler
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X[num_cols])
+    X_scaled = pd.DataFrame(data=X_scaled, columns=num_cols, index=X.index)
+    
+    # Combine num and cat cols
+    X = pd.concat([X_scaled, X[cat_cols]], axis=1)
+    
+    return X
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
