@@ -359,49 +359,50 @@ def classification_report(X_test, y_test, predictions, best_grid, display):
     # return classification report 
     return(classification_report(y_test, predictions)) 
 
-def test_imputations(X, y, num_cols):
+def test_imputations(X_train, y_train, num_cols, X_test=None):
     import statsmodels.api as sm
     from sklearn.impute import SimpleImputer
     from fancyimpute import KNN, IterativeImputer
     
     # Create an object of mean_imputed
     mean_imputer = SimpleImputer(strategy='mean')
-    X_mean_imputed = sm.add_constant(mean_imputer.fit_transform(X[num_cols]))
-    lm_mean = sm.OLS(y, X_mean_imputed).fit()
+    X_mean_imputed = sm.add_constant(mean_imputer.fit_transform(X_train[num_cols]))
+    lm_mean = sm.OLS(y_train, X_mean_imputed).fit()
 
     # Create an object of median imputed
     median_imputer = SimpleImputer(strategy='median')
-    X_median_imputed = sm.add_constant(median_imputer.fit_transform(X[num_cols]))
-    lm_median = sm.OLS(y, X_median_imputed).fit()
+    X_median_imputed = sm.add_constant(median_imputer.fit_transform(X_train[num_cols]))
+    lm_median = sm.OLS(y_train, X_median_imputed).fit()
 
     # Create an object of Iterative Imputer
     iterative_imputer = IterativeImputer()
-    X_iterative_imputed = sm.add_constant(iterative_imputer.fit_transform(X[num_cols]))
-    lm_iterative = sm.OLS(y, X_iterative_imputed).fit()
+    X_iterative_imputed = sm.add_constant(iterative_imputer.fit_transform(X_train[num_cols]))
+    lm_iterative = sm.OLS(y_train, X_iterative_imputed).fit()
 
     # Create an object of KNN Imputer
     knn_imputer = KNN()
-    X_knn_imputed = sm.add_constant(knn_imputer.fit_transform(X[num_cols]))
-    lm_knn = sm.OLS(y, X_knn_imputed).fit()
+    X_knn_imputed = sm.add_constant(knn_imputer.fit_transform(X_train[num_cols]))
+    lm_knn = sm.OLS(y_train, X_knn_imputed).fit()
     
     imputation_list = [('Mean', lm_mean.rsquared_adj), ('Median', lm_median.rsquared_adj), 
                        ('Iterative', lm_iterative.rsquared_adj), ('KNN', lm_knn.rsquared_adj)]
     imputation_list = sorted(imputation_list, key=(lambda x: x[1]), reverse=True)
     best_imputer = imputation_list[0]
     print('The best imputation: ', best_imputer)
+    
+    num_imputer = SimpleImputer(strategy='mean')
     if best_imputer == 'Mean':
         num_imputer = SimpleImputer(strategy='mean')
-        X[num_cols] = num_imputer.fit_transform(X[num_cols])
     elif best_imputer == 'Median':
         num_imputer = SimpleImputer(strategy='median')
-        X[num_cols] = num_imputer.fit_transform(X[num_cols])
     elif best_imputer == 'Iterative':
         num_imputer = IterativeImputer()
-        X[num_cols] = num_imputer.fit_transform(X[num_cols])
-    else:
-        num_imputer = KNN(test_KNN_imputation(X, y, num_cols))
-        X[num_cols] = num_imputer.fit_transform(X[num_cols])
-    return X
+    elif best_imputer == 'KNN':
+        num_imputer = KNN(test_KNN_imputation(X_train, y_train, num_cols))
+    X_train[num_cols] = num_imputer.fit_transform(X_train[num_cols])
+    if X_test:
+        X_test[num_cols] = num_imputer.fit_transform(X_test[num_cols])
+    return (X_train, X_test)
     
 def test_KNN_imputation(X_train, y_train, num_cols):
     import statsmodels.api as sm
@@ -480,20 +481,32 @@ def compare_regression(X, y, num_cols, cat_cols):
     	msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
     	print(msg)
 
-def impute_and_encode_and_scale(X, y, num_cols, cat_cols):
+def impute_and_encode_and_scale(X_train, y, num_cols, cat_cols, X_test=None):
     import pandas as pd
     # Test imputation methods
-    test_imputations(X, y, num_cols)
+    test_imputations(X_train, y, num_cols)
     
     # Impute missing numeric data
-    X = test_imputations(X, y, num_cols)
+    X_train = test_imputations(X_train, y, num_cols)
     
     # Scale numeric data
     from sklearn.preprocessing import StandardScaler
     scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X[num_cols])
-    X_scaled = pd.DataFrame(data=X_scaled, columns=num_cols, index=X.index)
+    X_scaled = scaler.fit_transform(X_train[num_cols])
+    X_scaled = pd.DataFrame(data=X_scaled, columns=num_cols, index=X_train.index)
+    
+    if X_test:
+        # Test imputation methods
+        test_imputations(X_test, y, num_cols)
         
+        # Impute missing numeric data
+        X_train = test_imputations(X_train, y, num_cols)
+        
+        # Scale numeric data
+        from sklearn.preprocessing import StandardScaler
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X_train[num_cols])
+        X_scaled = pd.DataFrame(data=X_scaled, columns=num_cols, index=X_train.index)
     # Impute missing categorical data
     if len(cat_cols) > 0:
         from sklearn.impute import SimpleImputer
@@ -508,6 +521,8 @@ def impute_and_encode_and_scale(X, y, num_cols, cat_cols):
     
         # Combine num and cat cols
         X = pd.concat([X_scaled, X[cat_cols]], axis=1)
+        
+        
     else:
         X = X_scaled
     
