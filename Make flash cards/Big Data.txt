@@ -51,4 +51,56 @@ x Use Data Pipeline.
 - Use the SWF service to write a custom workflow to process the incoming files from the 3rd party.
 - Run a cron job on a t2.micro instance that will execute Linux shell scripts.
 
+Q9. A producer application has been designed to write thousands of events per second to Kinesis Streams by integrating the Kinesis Producer library into the application. The application takes data from logs on EC2 instances and ingests the data into Streams records. Which of the following solutions did the developer use to improve throughput when implementing the KPL with the application?
+x Aggregation
+- Collection
+- Re-Aggregation
+- De-Aggregation
+
+Q10. Your company has a number of consumer applications to get records from various Kinesis Streams for different use cases. For each consumer application there is a separate DynamoDB table that maintains application state. Out of the many consumer applications, one application is experiencing provisioned throughput exception errors with its particular DynamoDB table. Why is this happening?
+x The stream has too many shards.
+- The stream does not have enough shards.
+x The application is checkpointing too frequently.
+- The application is not checkpointing enough.
+
+Q11. In terms of data read-rate for data output, what is the capacity of a shard in a Kinesis stream?
+- 4 MB/s
+- 6 MB/s
+- 1 MB/s
+x 2 MB/s
+
+Q12. Which of the following statements is true?
+x A shard supports up to 5 transactions per second for reads, and 1000 records per second for writes.
+- A shard supports up to 5 transactions per second for reads, and 100 records per second for writes.
+- A shard supports up to 5 transactions per second for reads, and 10 records per second for writes.
+- A shard supports up to 1000 transactions per second for reads, and 5 transactions per second for writes.
+
+Q13. Which operation/feature or service would you use to locate all items in a table with a particular sort key value?
+- Query
+- Query with a global secondary index
+- GetItem
+x Query with a local secondary index
+x Scan against a table, with filters
+
+Q14. The Kinesis Connector Library allows you to emit data from a stream to various AWS services. Which of the following services can receive data emitted from such a stream?
+- Lambda
+x S3
+x Elasticsearch
+x Redshift
+x DynamoDB
+- RDS
+
+Q15. In terms of data write-rate for data input, what is the capacity of a shard in a Kinesis stream?
+- 6 MB/s
+- 4 MB/s
+- 2 MB/s
+x 1 MB/s
+
+Q16. Which of the following must be defined when you create a table?
+- The table capacity, number of GB.
+x Partition Key
+x The WCU (Write Capacity Units)
+- The DCU (Delete/Update Capacity Units)
+x The RCU (Read Capacity Units)
+x The Table Name
 
