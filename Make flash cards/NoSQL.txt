@@ -46,10 +46,10 @@
 - [ ] Values.
 - [x] Keys.
 
-####Q9. ou need to change the shard key of an existing MongoDB collection. What do you do?
-- [ ] Dump the collection data, drop the collection, create a new collection and shard key, import the data.
+####Q9. You need to change the shard key of an existing MongoDB collection. What do you do?
+- [] Dump the collection data, drop the collection, create a new collection and shard key, import the data.
 - [ ] Add second shard key and drop the first shard key.
-- [ ] Dump the collection data, drop the collection, presplit the data, create a new collection and shard key, import the data.
+- [x] Dump the collection data, drop the collection, presplit the data, create a new collection and shard key, import the data.
 - [ ] Drop and recreate the shard key.
 
 ####Q10. Polyglot storage means using multiple types of what in the same application?
@@ -114,7 +114,7 @@
 
 ####Q20. You need to design security for DynamoDB to allow users read-obly access to certain items and attriutes in a table. What do you do?
 - [ ] Use IAM roles.
-- [x] Use IAM plicy conditions.
+- [x] Use IAM policy conditions.
 - [ ] Use a VPC endpoint.
 - [ ] Use IAM plicies.
 
@@ -197,7 +197,7 @@
 - [ ] DYnamoDB index
 
 ####Q34. Which two types of indexes are available in Cosmos DB?
-- [x] secondery and primary key
+- [x] secondary and primary key
 - [ ] secondary and spatial
 - [ ] range and spatial
 - [ ] range and primary key
@@ -258,8 +258,8 @@
 - [ ] the amount of service costs
 - [ ] the number of nines
 
-#### Q45. You need to encrypt data at rest in DynamoDB.  Which action do you take?
-- [ ] You assign a default AWS encryption key to your table to encrypt data.
+#### Q45. You need to encrypt data at rest in DynamoDB. Which action do you take?
+- [x] You assign a default AWS encryption key to your table to encrypt data.
 - [ ] You create an AWS encryption key and assign it to your table to encrypt data.
 - [ ] None.  Data is encrypted by default.
 - [ ] You create an AWS encryption key and assign it to your database to encrypt data.
