@@ -163,12 +163,6 @@ modified: beta-notes.js
   git reset --hard origin/master
   ```
 
-#### Q21. Which statement is true when you use the **git add -A** command?
-- [ ] Only new files in the working directory are staged to the index.
-- [x] All new and updated files from the working directory are staged to the index.
-- [ ] All files in the working directory are staged to the index in alphabetical order.
-- [ ] Only updated files in the working directory are staged to the index.
-
 #### Q22. You find that your project has a tag and branch both named push-notifications, which causes confusion when trying to print out given reference. How can you specify which branch you want to look at?
 - [ ] use git show refs/push-notifications
 - [ ] use git show push-notifications
@@ -224,7 +218,6 @@ git push -u origin master
 Changes not staged for commit:
 (use "git add <file>..." to update what will be committed)
 (use "git checkout -- <file>..." to discard changes in working directory)
-
 modified: beta-notes.js
 ```
 - [ ] beta-notes.js is untracked and has been modified.
@@ -286,12 +279,6 @@ modified: beta-notes.js
 - [ ] Delete the push-notifications branch; it will be committed to the master branch automatically.
 - [ ] Check out the push-notifications branch and run git merge beta.
 - [x] Check out the beta branch and run git merge push-notifications.
-
-#### Q39. Which statement is true of the git push command?.
-- [ ] Commits can be tagged only when they are created.
-- [x] By default a push doesn't send tags to the remote repository.
-- [ ] Only annotated tags are automatically pushed to the remote repository with a commit.
-- [ ] Tags are pushed to the remote repository with their respective commits.
 
 #### Q40. Which setting determines what pager is used when Git pages output?
 - [ ] core.page
@@ -547,12 +534,6 @@ git checkout -b beta-test
 - [ ] SVN works only on Linux, while Git works on all operating systems.
 - [x] SVN is a centralized system, while Git is a distributed system.
 - [ ] Git a centralized system, while SVN is a distributed system.
-
-#### Q82. Where are files stored before they are committed to the local repository ?
-- [ ] git
-- [ ] saved files
-- [x] staging area/index
-- [ ] git documents
 
 #### Q83. This command is an example of what kind of tag ?
 `git tag -a v1.4 -m "ABCD v1.5"`
