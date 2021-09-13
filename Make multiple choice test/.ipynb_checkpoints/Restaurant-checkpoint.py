@@ -5,8 +5,6 @@ Created on Sun Sep 12 00:59:23 2021
 @author: TeoHangXanh
 """
 import random
-import time
-import math
 from termcolor import colored
 
 food_dict = {'Appetizer': ['Adamame',
@@ -45,14 +43,7 @@ food_dict = {'Appetizer': ['Adamame',
                         'Pepper Steak',
                         'Thai Spicy Basil',
                         'Broccoli Beef',
-                        ],
-             'Sides': ['Sauces',
-                       'Rice',
-                       'Steam vegis',
-                       'Extras',
-                       'Steam noodles',
-                       'Fried Egg',
-                       ]
+                        ]
              }
 
 lookup = {
@@ -61,7 +52,6 @@ lookup = {
     'C': 'Salad',
     'D': 'Soup',
     'E': 'Entree',
-    'F': 'Sides'
 }
 category, name = [], []
 for cat, n in food_dict.items():
@@ -71,16 +61,10 @@ random.shuffle(name)
 
 scores = maximum_scores = 0
 for food in name:
-    start = time.time()
-    answer = input(f'What is the category of {food}?\nA. Appetizer\nB. Grill\nC. Salad\nD. Soup\nE. Entree\nF. Sides\n')
+    answer = input(f'What is the category of {food}?\nA. Appetizer\nB. Grill\nC. Salad\nD. Soup\nE. Entree\n')
     if food in food_dict[lookup[answer.strip().title()]]:
-        end = time.time()
-        reaction_time = end - start
-        current_scores = 1
-        if reaction_time > 2: # If the reaction
-            current_scores = max(0, 1 - math.ceil(reaction_time - 2) * 0.25)
-        print(f'Correct! You got {current_scores} points')
-        scores += current_scores
+        print('Correct!')
+        scores += 1
     else:
         print(colored('Wrong!', 'red'))
     maximum_scores += 1
