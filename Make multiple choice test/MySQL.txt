@@ -324,13 +324,10 @@
 #### Q44. Which is the correct syntax of an extended insert statement?
 - [ ] insert into cars (make, model, year) values ('Ford', 'Mustang', 2002)
   ('Mercedes', 'C', 2003)
-
 - [ ] insert into cars (make, model, year) values ('Ford', 'Mustang', 2002)
   values ('Mercedes', 'C', 2003)
-
 - [ ] insert into cars (make, model, year) extended ('Ford', 'Mustang', 2002),
   ('Mercedes', 'C', 2003)
-
 - [x] insert into cars (make, model, year) values ('Ford', 'Mustang', 2002),
   ('Mercedes', 'C', 2003)
 
