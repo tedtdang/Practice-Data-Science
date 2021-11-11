@@ -1,66 +1,97 @@
-#### Q1. K-means is a supervised learning technique that can be used for classification while K-nearest neighbors is an unsupervised learning technique which returns classes of the samples based solely on similarity between samples.
+####Q1. K-means is a supervised learning technique that can be used for classification while K-nearest neighbors is an unsupervised learning technique which returns classes of the samples based solely on similarity between samples
 - [ ] True
 - [x] False
 
-#### Q2. Given the same data set, K-means always converges to the same solution, regardless of the starting point.
+####Q2. Given the same data set, K-means always converges to the same solution, regardless of the starting point
 - [ ] True
 - [x] False
 
-#### Q3. Check all the ways of initializing K-means
+####Q3. Check all the ways of initializing K-means
 - [x] randomly choose samples as the initial centroids
-- [] initialize all centroids at the mean of all the samples
+- [ ] initialize all centroids at the mean of all the samples
 - [x] randomly assign all samples to one of K classes
-- [] initialize all centroids at the origin - e.g. (0,0)
+- [ ] initialize all centroids at the origin - e.g. (0,0)
 
-#### Q4. Although metrics are available to measure the quality of clustering when we know the true classes, there are no metrics to measure the quality of unsupervised clustering when true classes are not known.
+####Q4. Although metrics are available to measure the quality of clustering when we know the true classes, there are no metrics to measure the quality of unsupervised clustering when true classes are not known
 - [ ] True
 - [x] False
 
-#### Q5. Pick the two data formats for use in clustering
+####Q5. Pick the two data formats for use in clustering
 - [x] a similarity matrix of size 'samples x samples'
-- [] a 'features x features' sized correlation matrix
+- [ ] a 'features x features' sized correlation matrix
 - [x] a 'samples x features' matrix, standard in machine learning but without a chosen predictor
 
-#### Q6. Check the scenario where density-based clustering algorithms like DBSCAN are expected to outperform K-means
-- [] When the clusters are well represented by spheres
-- [] When we know exactly how many clusters to expect
+####Q6. Check the scenario where density-based clustering algorithms like DBSCAN are expected to outperform K-means
+- [ ] When the clusters are well represented by spheres
+- [ ] When we know exactly how many clusters to expect
 - [x] When the clusters would share the same center-point, such as two concentric circles
 
-#### Q7. Check all the components of a basic reinforcement learning model. Note, all rules can be deterministic or stochastic
+####Q7. Check all the components of a basic reinforcement learning model
 - [x] A set of states of the environment
 - [x] A set of actions the organism can take
 - [x] rules of transitions between states
 - [x] rules that determine the immediate reward of certain transitions
 - [x] rules that describe what the organism can observe
 
-#### Q8. Check all of the following that are associated with"model-free" reinforcement learning as opposed to model-based learning?
+####Q8. Check all of the following that are associated with "model-free" reinforcement learning as opposed to model-based learning?
 - [x] It is more associated with valuation of repetitive events than new, novel environments (e.g. habit learning)
 - [ ] It takes advantage of direct knowledge of probabilities between states to optimize learning
 - [x] Inferring state and action value functions iteratively based on repeated rewards and punishments
 - [x] This technique uses prediction error as the primary means of updating policy decisions
 
-#### Q9. An important aspect in formulating a problem as a Markov process is that the future is conditionally independent of the past giving the current state. That is, history is not important for decision making when the model and the current state are known.
+####Q9. An important aspect in formulating a problem as a Markov process is that the future is conditionally independent of the past giving the current state
 - [x] True
 - [ ] False
 
-#### Q10. When you are not sure if your state-action value function is correct, you should always pick the state-action pair of maximum value. Only when you are certain of the value of particular states would you deviate from this optimum policy.
+####Q10. When you are not sure if your state-action value function is correct, you should always pick the state-action pair of maximum value
 - [ ] True
 - [x] False
 
-#### Q11. Reward prediction error is...
+####Q11. Reward prediction error is
 - [ ] The total future expected reward minus the total future actual reward (with temporal discounting)
 - [ ] The total future actual reward minus the total future expected reward (with temporal discounting)
 - [ ] The expected reward value - the received reward value
 - [x] The received reward value - the expected reward value
 
-#### Q12. In Q learning, you are updating the action value function, but there are two parameters which control the manner in which this updating occurs. Which two?
+####Q12. In Q learning, you are updating the action value function, but there are two parameters which control the manner in which this updating occurs
 - [ ] Regularization strength (lamda)
 - [x] Temporal discounting (gamma)
 - [ ] Maximum estimation error (epsilon)
 - [x] Learning rate (alpha)
 
-#### Q13. Q-learning is primarily used for highly repeatable scenarios. Why? Check all that apply
-- [x] Q-values only propagate backward from a reward one step at a time, thus requiring many repetitions to build up value functions far from a reward event.
-- [x] Q values are generally estimated for a large portion of the state-action pairs, thus to get reliable Q(a,s) values a number of visits to those states becomes necessary.
-- [x] Learning rates have to be lowered to avoid "superstitious" valuations due to stochastic rewards. Because of this lowering, many repetitions may be necessary to arrive at the right value for Q(a,s)
-- [x] Generally, there is an exploration vs. exploitation tradeoff. In a game of skill, it may be necessary to explore states that may be temporarily suboptimal but can lead to greater future rewards (e.g. losing a rook during chess). Exploring such suboptimal strategies can lead to much larger spaces to search than simple, seemingly optimal strategies.
+####Q13. What is the best description of what a link between nodes represents in a Bayesian network?
+- [ ] Only between variables that are directly causal, from cause to effect.
+- [x] Linking direct dependences, not necessarily causal.
+- [ ] Any variables that are not independent from each other require a direct link
+
+####Q14. Which is an example of "explaining away"? That is, how a shared child node can indicate a dependency among parent nodes only when observed.
+- [ ] A positive result on a lung X-ray indicates a high probability that someone has lung cancer
+- [ ] When you see someone smoking, you know their odds of having a positive lung X-ray for cancer are higher.
+- [x] Seeing someone with lung cancer is smoking makes you less likely to assume the cancer is from high levels of pollution.
+
+####Q15. Two child nodes of the same parent are independent until the parent node is observed, which then introduces a dependency.
+- [ ] True
+- [x] False
+
+####Q16. Two nodes that share the same child node are independent until the child node is observed, which then introduces a dependency.
+- [x] True
+- [ ] False
+
+####Q17. Assuming none of the variables are observed, in which of the graphs would the value of node A depend upon the value of node C. Multiple possible. Note, node B is NOT observed.
+- [x] A --> B --> C
+- [x] A <-- B <-- C
+- [ ] A --> B <-- C
+- [x] A <-- B --> C
+
+####Q18. Assuming the value of B is observed ("known"), in which of the graphs would the value of node A now depend upon the value of node C.
+- [ ] A --> B --> C
+- [ ] A <-- B <-- C
+- [x] A --> B <-- C
+- [ ] A <-- B --> C
+
+####Q19. Check all components of a fully-specified Bayesian network
+- [x] Notes representing variables
+- [x] Links between the nodes representing dependencies between variables
+- [x] Conditional probability tables (or probability functions if continuous) quantifying the dependencies which the links represent
+- [x] Prior probabilities for root nodes
+

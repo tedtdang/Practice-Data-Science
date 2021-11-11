@@ -33,7 +33,7 @@
 - [x] rules that determine the immediate reward of certain transitions
 - [x] rules that describe what the organism can observe
 
-####Q8. Check all of the following that are associated with"model-free" reinforcement learning as opposed to model-based learning?
+####Q8. Check all of the following that are associated with "model-free" reinforcement learning as opposed to model-based learning?
 - [x] It is more associated with valuation of repetitive events than new, novel environments (e.g. habit learning)
 - [ ] It takes advantage of direct knowledge of probabilities between states to optimize learning
 - [x] Inferring state and action value functions iteratively based on repeated rewards and punishments
@@ -59,43 +59,39 @@
 - [ ] Maximum estimation error (epsilon)
 - [x] Learning rate (alpha)
 
-####Q.13 What is the best description of what a link between nodes represents in a Bayesian network?
-- [x] Only between variables that are directly causal, from cause to effect.
+####Q13. What is the best description of what a link between nodes represents in a Bayesian network?
+- [ ] Only between variables that are directly causal, from cause to effect.
 - [x] Linking direct dependences, not necessarily causal.
-- [x] Any variables that are not independent from each other require a direct link
+- [ ] Any variables that are not independent from each other require a direct link
 
-
-####Q.14 Which is an example of "explaining away"? That is, how a shared child node can indicate a dependency among parent nodes only when observed.
-- [x] A positive result on a lung X-ray indicates a high probability that someone has lung cancer
-- [x] When you see someone smoking, you know their odds of having a positive lung X-ray for cancer are higher.
+####Q14. Which is an example of "explaining away"? That is, how a shared child node can indicate a dependency among parent nodes only when observed.
+- [ ] A positive result on a lung X-ray indicates a high probability that someone has lung cancer
+- [ ] When you see someone smoking, you know their odds of having a positive lung X-ray for cancer are higher.
 - [x] Seeing someone with lung cancer is smoking makes you less likely to assume the cancer is from high levels of pollution.
 
-####Q.15 Two child nodes of the same parent are independent until the parent node is observed, which then introduces a dependency.
-- [x] True
+####Q15. Two child nodes of the same parent are independent until the parent node is observed, which then introduces a dependency.
+- [ ] True
 - [x] False
 
-####Q.16 Two nodes that share the same child node are independent until the child node is observed, which then introduces a dependency.
+####Q16. Two nodes that share the same child node are independent until the child node is observed, which then introduces a dependency.
 - [x] True
-- [x] False
+- [ ] False
 
-####Q.17 Assuming none of the variables are observed, in which of the graphs would the value of node A depend upon the value of node C. Multiple possible. Note, node B is NOT observed.
+####Q17. Assuming none of the variables are observed, in which of the graphs would the value of node A depend upon the value of node C. Multiple possible. Note, node B is NOT observed.
 - [x] A --> B --> C
 - [x] A <-- B <-- C
-- [x] A --> B <-- C
+- [ ] A --> B <-- C
 - [x] A <-- B --> C
 
-####Q.18 Assuming the value of B is observed ("known"), in which of the graphs would the value of node A now depend upon the value of node C.
-- [x] A --> B --> C
-- [x] A <-- B <-- C
+####Q18. Assuming the value of B is observed ("known"), in which of the graphs would the value of node A now depend upon the value of node C.
+- [ ] A --> B --> C
+- [ ] A <-- B <-- C
 - [x] A --> B <-- C
-- [x] A <-- B --> C
+- [ ] A <-- B --> C
 
-####Q.19 Check all components of a fully-specified Bayesian network
+####Q19. Check all components of a fully-specified Bayesian network
 - [x] Notes representing variables
 - [x] Links between the nodes representing dependencies between variables
 - [x] Conditional probability tables (or probability functions if continuous) quantifying the dependencies which the links represent
 - [x] Prior probabilities for root nodes
 
-####Q.20 Power of Bayesian networks: with a fully specified Bayesian network (priors and likelihoods defined), it is possible (with appropriate software) to estimate probabilities of any variables in the network given observations of other variables, regardless of location in the network.
-- [x] True
-- [x] False
