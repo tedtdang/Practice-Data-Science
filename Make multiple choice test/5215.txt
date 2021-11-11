@@ -95,3 +95,94 @@
 - [x] Conditional probability tables (or probability functions if continuous) quantifying the dependencies which the links represent
 - [x] Prior probabilities for root nodes
 
+####Q20. If a potential feature does not necessarily correlate with a target, it should not necessarily be removed because
+- [x] It may still have a dependent relationship with the target
+- [ ] lack of correlation does not imply lack of causation
+- [ ] correlation does not imply causation
+- [ ] the best fitting line in a scatter plot with the feature and target may have a non-zero slope for a line in linear regression
+
+####Q21. Accuracy is
+- [ ] The geometric mean of precision and recall
+- [ ] The arithmetic mean of precision and recall
+- [x] the average recall across classes if the number of items in each class is the same
+
+####Q22. In a given binary classification problem, Out of all the positive samples in the test set, the proportion of those which are correctly identified as positive by the classifier is called...
+- [x] Recall
+- [ ] Specificity
+- [ ] F1 Score
+- [ ] Precision
+
+####Q23. When cross-validation is performed in the validation set, the score of the best fitted model hyperparameters in that set is on average lower than the the score of that best fitted model on a separate test set.####Q24. If 5% of your samples have incorrect labels in your available labelled data, which option is likely best to improve model accuracy?
+- [ ] True
+- [x] False
+- [x] Change your hyperparameter to avoid overfitting
+- [ ] Get more samples (even if they are 1% in error)
+- [ ] Add/remove features
+- [ ] Derive/predict new features from current features in your data set
+
+####Q24. In a classification problem using high dimensional data (e.g. greater than 10 features) a PCA dimensionality reduction to two PCA components was performed to visually observe how separable two classes are on a scatter plot with X as PCA component 1 and Y as PCA component 2 for each data point. If the classes are not visibly separate in the 2D plot, what does that mean for a classifier trained on all the features?
+- [x] They may be separable with more features, it is inconclusive
+- [ ] They cannot be distinguished by a classifier
+- [ ] Overlaps in the PCA plot indicate the classes are separable when all features are used
+
+####Q25. The proportion of correctly identified samples from the test samples that were identified as belonging to a particular class by the classifier is called...
+- [ ] Sensitivity
+- [x] Precision
+- [ ] Recall
+- [ ] F1 Score
+
+####Q26. In Gaussian Naive Bayes, select all the parameters that have to be learned from the data to create a predictive model
+- [ ] The mean and standard deviation for each feature, combining all classes together
+- [ ] the prior probability of each feature value's likelihood
+- [x] the proportion of training data in each class
+- [x] The mean and standard deviation for each feature for each class
+
+####Q27. Check which of the following are associated with Bagging instead of Boosting
+- [ ] This is a common strategy to combine multiple learners, even if they are from completely different modeling strategies (e.g. combining logistic regression and naive bayes)
+- [ ] This is more likely to be used for models which are weak learners, like decision stumps - decision trees with only one level.
+- [x] This is more likely to be used for models which have the potential to overfit, like decision trees with no restrictions.
+- [x] Random forest classifiers use this technique
+
+####Q28. Check which of the following are associated with Bagging instead of Boosting
+- [ ] This technique is one of the reasons that some Kaggle competitions don’t allow teams to merge during competitions (e.g. team #2 and #3 join together)
+- [x] All estimators are weighted equally.
+- [x] the features (commonly the columns in a data set) and samples/observations (commonly the rows in a data set) may be resampled. And this can be done with or without replacement.
+
+####Q29. K-fold cross-validation will lead to lower accuracies than expected with the full training set because only (K-1)/K % of the data is being used for training (e.g. 4/5ths for K=5). The way to improve this is by increasing K.But what is a problem with increasing K?
+- [ ] The separated test set is getting small and may bias results of the cross-validation
+- [ ] The number of samples in the data set may not be perfectly divisible by K
+- [x] K models have to be trained which takes more time as K increases
+
+####Q30. It is important to not remove features that are statistically independent of target values because they might be correlated to the target, and thus useful for prediction.
+- [ ] True
+- [x] False
+
+####Q31. Specificity is...
+- [ ] Precision for the negative case
+- [x] Recall for the negative case
+- [ ] Recall for the positive case
+- [ ] Precision for the positive case
+
+####Q32. After determining the best k value for a k nearest neighbors prediction, how might the best fitting k value change if we changed the training set by incorrectly labeling 10% of all examples?
+- [ ] mathematically, the best fitting k value would stay the same regardless of adding noise
+- [x] best k value would on average be higher
+- [ ] best k value would on average be lower
+
+####Q33. Which of the following is not an explicit part of the standard Q-learning equation?a state-action value function
+- [ ] Temporal discounting
+- [ ] Reward prediction error
+- [ ] a learning rate
+- [x] the policy function
+
+####Q34. If I want to test my voice recognition software to see how well it will works on a new person it has not yet been trained for, what type of cross-validation would give me the best sense of accuracy?
+- [ ] K fold cross-validation
+- [ ] Stratified K-fold cross-validation
+- [ ] Leave one out cross-validation
+- [x] Subject-wise cross-validation
+
+####Q35. The Q in Q-learning for reinforcement learning is best described as
+- [ ] The reward signal from the environment
+- [ ] the reward prediction error quotient
+- [ ] The discount factor
+- [x] The sum of future expected rewards
+
