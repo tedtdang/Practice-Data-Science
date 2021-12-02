@@ -112,9 +112,7 @@
 - [ ] F1 Score
 - [ ] Precision
 
-####Q23. When cross-validation is performed in the validation set, the score of the best fitted model hyperparameters in that set is on average lower than the the score of that best fitted model on a separate test set.####Q24. If 5% of your samples have incorrect labels in your available labelled data, which option is likely best to improve model accuracy?
-- [ ] True
-- [x] False
+####Q23. If 5% of your samples have incorrect labels in your available labelled data, which option is likely best to improve model accuracy?
 - [x] Change your hyperparameter to avoid overfitting
 - [ ] Get more samples (even if they are 1% in error)
 - [ ] Add/remove features
@@ -168,7 +166,8 @@
 - [x] best k value would on average be higher
 - [ ] best k value would on average be lower
 
-####Q33. Which of the following is not an explicit part of the standard Q-learning equation?a state-action value function
+####Q33. Which of the following is not an explicit part of the standard Q-learning equation?
+- [ ] state-action value function
 - [ ] Temporal discounting
 - [ ] Reward prediction error
 - [ ] a learning rate
@@ -202,7 +201,7 @@
 - [ ] In Ridge Regression, irrelevant feature coefficients will often be set to zero, effectively removing them from the model
 - [x] In Lasso Regression, irrelevant feature coefficients will often be set to zero, effectively removing them from the model
 - [x] In Ridge Regression, irrelevant feature coefficients will be pushed to zero, but likely not completely removed
-- [] In Lasso Regression, irrelevant feature coefficients will be pushed to zero, but likely not completely removed
+- [ ] In Lasso Regression, irrelevant feature coefficients will be pushed to zero, but likely not completely removed
 
 ####Q39. Choose correct answers
 - [x] Leave one out cross-validation: Same as K-fold cross-validation where K = the size of the data set
@@ -244,22 +243,100 @@
 - [ ] True
 - [x] False
 
-####Q47. Given the same data set, K-means always converges to the same solution, regardless of the starting point.
+####Q47. Here is an analogy:"Rose" is to "Flower" as "Porsche" is to "Automobile", because the first word is a type of the second word."North" is to "South" as "Black" is to "White" because second word is the opposite of the first word.and so on...The following is analogy can be said for four important concepts in machine learning. Fill in the blank.Classification is to regression in supervised learning as _____________ is to dimensionality reduction in unsupervised learning.Or more succinctlyClassification is to regression as ___________________ is to dimensionality reduction
+- [ ] PCA
+- [ ] Factor Analysis
+- [x] Clustering
+- [ ] Reinforcement learning
+
+####Q48. What is the purpose of regularization in linear regression?
+- [x] To diminish the contribution of irrelevant features to the resulting model, effectively performing automated feature selection during learning
+- [x] To decrease the coefficient values for irrelevant terms in the regression model
+- [ ] To lasso the ridge with an elastic net
+- [x] To improve prediction accuracy on a future test set better than ordinary linear regression
+
+####Q49. If a potential feature does not necessarily correlate with a target, it should not necessarily be removed because
+- [x] It may still have a dependent relationship with the target
+- [ ] lack of correlation does not imply lack of causation
+- [ ] correlation does not imply causation
+- [ ] the best fitting line in a scatter plot with the feature and target may have a non-zero slope for a line in linear regression
+
+####Q50. Accuracy is
+- [ ] The geometric mean of precision and recall
+- [ ] The arithmetic mean of precision and recall
+- [x] the average recall across classes if the number of items in each class is the same
+
+####Q51. In a given binary classification problem, Out of all the positive samples in the test set, the proportion of those which are correctly identified as positive by the classifier is called...
+- [x] Recall
+- [ ] Specificity
+- [ ] F1 Score
+- [ ] Precision
+
+####Q52. When cross-validation is performed in the validation set, the score of the best fitted model hyperparameters in that set is on average lower than the the score of that best fitted model on a separate test set.
 - [ ] True
 - [x] False
 
-####Q48. Check all the ways of initializing K-means
-- [x] randomly choose samples as the initial centroids
-- [ ] initialize all centroids at the mean of all the samples
-- [x] randomly assign all samples to one of K classes
-- [ ] initialize all centroids at the origin - e.g. (0,0)
+####Q53. If 5% of your samples have incorrect labels in your available labelled data, which option is likely best to improve model accuracy?
+- [ ] Get more samples (even if they are 1% in error)
+- [x] Change your hyperparameter to avoid overfitting
+- [ ] Add/remove features
+- [ ] Derive/predict new features from current features in your data set
 
-####Q49. Pick the two data formats for use in clustering
-- [x] a similarity matrix of size 'samples x samples'
-- [ ] a 'features x features' sized correlation matrix
-- [x] a 'samples x features' matrix, standard in machine learning but without a chosen predictor
+####Q54. The proportion of correctly identified samples from the test samples that were identified as belonging to a particular class by the classifier is called...
+- [ ] Recall
+- [ ] Specificity
+- [ ] F1 Score
+- [x] Precision
 
-####Q50. Check the scenario where density-based clustering algorithms like DBSCAN are expected to outperform K-means
-- [ ] When the clusters are well represented by spheres
-- [ ] When we know exactly how many clusters to expect
-- [x] When the clusters would share the same center-point, such as two concentric circles
+####Q55. In Gaussian Naive Bayes, select all the parameters that have to be learned from the data to create a predictive model
+- [ ] The mean and standard deviation for each feature, combining all classes together
+- [ ] the prior probability of each feature value's likelihood
+- [x] the proportion of training data in each class
+- [x] The mean and standard deviation for each feature for each class
+
+####Q56. Check which of the following are associated with Bagging instead of Boosting
+- [ ] This is a common strategy to combine multiple learners, even if they are from completely different modeling strategies (e.g. combining logistic regression and naive bayes)
+- [ ] This is more likely to be used for models which are weak learners, like decision stumps - decision trees with only one level.
+- [x] This is more likely to be used for models which have the potential to overfit, like decision trees with no restrictions.
+- [x] Random forest classifiers use this technique
+
+####Q57. Check which of the following are associated with Bagging instead of Boosting
+- [ ] This technique is one of the reasons that some Kaggle competitions don’t allow teams to merge during competitions (e.g. team #2 and #3 join together)
+- [x] All estimators are weighted equally.
+- [x] the features (commonly the columns in a data set) and samples/observations (commonly the rows in a data set) may be resampled. And this can be done with or without replacement.
+
+####Q58. cross-validation will lead to lower accuracies than expected with the full training set because only (K-1)/K % of the data is being used for training (e.g. 4/5ths for K=5). The way to improve this is by increasing K. But what is a problem with increasing K?
+- [ ] The separated test set is getting small and may bias results of the cross-validation
+- [ ] The number of samples in the data set may not be perfectly divisible by K
+- [x] K models have to be trained which takes more time as K increases
+
+####Q59. Specificity is...
+- [ ] Precision for the negative case
+- [x] Recall for the negative case
+- [ ] Recall for the positive case
+- [ ] Precision for the positive case
+
+####Q60. After determining the best k value for a k nearest neighbors prediction, how might the best fitting k value change if we changed the training set by incorrectly labeling 10% of all examples?
+- [ ] mathematically, the best fitting k value would stay the same regardless of adding noise
+- [x] best k value would on average be higher
+- [ ] best k value would on average be lower
+
+####Q61. Which of the following is not an explicit part of the standard Q-learning equation?
+- [ ] a state-action value function
+- [ ] Temporal discounting
+- [ ] Reward prediction error
+- [ ] a learning rate
+- [x] the policy function
+
+####Q62. If I want to test my voice recognition software to see how well it will works on a new person it has not yet been trained for, what type of cross-validation would give me the best sense of accuracy?
+- [ ] K fold cross-validation
+- [ ] Stratified K-fold cross-validation
+- [ ] Leave one out cross-validation
+- [x] Subject-wise cross-validation
+
+####Q63. The Q in Q-learning for reinforcement learning is best described as
+- [ ] The reward signal from the environment
+- [ ] the reward prediction error quotient
+- [ ] The discount factor
+- [x] The sum of future expected rewards
+
