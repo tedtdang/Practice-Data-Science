@@ -3,6 +3,6 @@
   <component name="NewModuleRootManager">
     <orderEntry type="jdk" jdkName="Python 3.9 (base)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="AmExpert Code Lab" />
+    <orderEntry type="module" module-name="Optimus" />
   </component>
 </module>

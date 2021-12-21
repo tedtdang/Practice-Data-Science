@@ -5,16 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f99c8b05-082c-44d4-ba0b-4271a141bac0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../AmExpert Code Lab/Part 3 - Optuna Search with multiple models.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../AmExpert Code Lab/Part 3 - Optuna Search with multiple models.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AmExpert Code Lab/Pytorch Linear model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../AmExpert Code Lab/Pytorch Linear model.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AmExpert Code Lab/Solution.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../AmExpert Code Lab/Solution.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AmExpert Code Lab/X_test.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../AmExpert Code Lab/X_test.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AmExpert Code Lab/X_train.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../AmExpert Code Lab/X_train.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AmExpert Code Lab/processor.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/../AmExpert Code Lab/processor.pkl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/Make multiple choice test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Make multiple choice test.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Optimus/Optimus column analysis.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../Optimus/Optimus column analysis.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Optimus/Solution.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../Optimus/Solution.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +32,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AmExpert Code Lab" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Optimus" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
