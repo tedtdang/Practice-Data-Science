@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f99c8b05-082c-44d4-ba0b-4271a141bac0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Make multiple choice test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Make multiple choice test.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Optimus/Optimus column analysis.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../Optimus/Optimus column analysis.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Optimus/Predicted.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../Optimus/Predicted.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Optimus/Solution.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../Optimus/Solution.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
